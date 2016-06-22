@@ -22,11 +22,12 @@ mongoose
 app
   .use(morgan('dev'))
   .use(express.static('public'))
+  .get('*', (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.sendFile(path.join(__dirname + '/public/app/index.html'));
+    next();
+  })
   .use('/api', apiCtrl)
-  // .get('*', (req, res) => {
-  //   res.setHeader('Content-Type', 'text/html');
-  //   res.sendFile(path.join(__dirname + '/public/app/index.html'));
-  // })
 
 app.listen(config.port);
 console.log(`Server running on port ${config.port}`);

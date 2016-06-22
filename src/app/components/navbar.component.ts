@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+
 
 @Component({
   selector: 'my-nav',
@@ -6,14 +8,15 @@ import {Component} from '@angular/core';
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a href="/" class="navbar-brand"><span class="glyphicon glyphicon-fire text-danger"></span> All Jobs</a>
+          <a [routerLink]="['/']" class="navbar-brand"><span class="glyphicon glyphicon-fire text-danger"></span> All Jobs</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/vacancypost">Post a job</a></li>
+          <li><a [routerLink]="['/jobs/post']">Post a job</a></li>
         </ul>
       </div>
     </nav>
-  `
+  `,
+  directives: [ROUTER_DIRECTIVES]
 })
 
 export class NavbarComponent {}
