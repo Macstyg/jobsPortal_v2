@@ -9,7 +9,11 @@ import {HomeComponent} from './components/home.component';
   selector: 'my-app',
   template: `
     <my-nav></my-nav>
-    <router-outlet></router-outlet>
+    <div class="container">
+      <div class="row">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   `,
   directives: [NavbarComponent, ROUTER_DIRECTIVES]
 })

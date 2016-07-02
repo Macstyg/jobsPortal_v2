@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { JobsService } from '../services/jobs.service';
 
 @Component({
   selector: 'my-home',
   template:`
-    <h1 class="text-center">Here you can see all the vacancys</h1>
-    <div class="container">
-      <div class="row">
+      <h1 class="text-center">Here you can see all the vacancys</h1>
         <div class="col-sm-8 col-sm-offset-2">
           <div class="form-group">
             <label>Search:</label>
@@ -20,15 +19,14 @@ import { JobsService } from '../services/jobs.service';
               <div>
                 <a href="#">{{ job.companyname }}</a>
               </div>
-              <a href="#">{{ job.description }}</a>
+              <a [routerLink]="['/jobs', job._id]">{{ job.description }}</a>
               <div>Compensation: {{ job.compensation }} </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
   `,
-  providers: [JobsService]
+  providers: [JobsService],
+  directives: [ROUTER_DIRECTIVES]
 })
 
 export class HomeComponent implements OnInit {

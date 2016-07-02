@@ -6,10 +6,6 @@ module.exports = function (app, express) {
 
 var apiRouter = express.Router();
 
-  app
-    .use(bodyParser.json())
-    .use(bodyParser.urlencoded({ extended: true }));
-
 apiRouter
   .route('/jobs')
 
@@ -23,7 +19,7 @@ apiRouter
       vacancy.compensation = req.body.compensation;
       vacancy.title = req.body.title;
       vacancy.description = req.body.description;
-
+console.log(req.body);
       vacancy.save((err) => {
         if (err) res.send(err);
         res.json({ message: 'Vacancy has been created' });

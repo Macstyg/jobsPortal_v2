@@ -4,6 +4,7 @@ var express    = require('express'),
     morgan     = require('morgan'),
     config     = require('./config'),
     path       = require('path'),
+    bodyParser = require('body-parser'),
     app        = express(),
     apiCtrl    = require('./controllers/apiCtrl')(app, express);
 
@@ -21,13 +22,15 @@ mongoose
 
 app
   .use(morgan('dev'))
-  .use(express.static('public'))
-  .get('*', (req, res, next) => {
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    // res.sendFile(path.join(__dirname + '/public/app/index.html'));
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE');
     next();
   })
-  .use('/api', apiCtrl)
+  .use(express.static('public'))
+  .use('/api', apiCtrl) 
 
 app.listen(config.port);
 console.log(`Server running on port ${config.port}`);
