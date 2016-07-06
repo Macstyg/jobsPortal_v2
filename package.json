@@ -8,7 +8,6 @@
   "description": "Portal for search job for the remote workers",
   "scripts": {
     "typings-install": "typings install",
-    "postinstall": "npm run typings-install",
     "build": "webpack --inline --colors --progress --display-error-details --display-cached",
     "watch": "npm run build -- --watch",
     "server": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached --port 8080  --content-base src",
