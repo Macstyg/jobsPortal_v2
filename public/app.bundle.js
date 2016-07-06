@@ -8,15 +8,17 @@ webpackJsonp([0],{
 	var forms_1 = __webpack_require__(328);
 	var http_1 = __webpack_require__(365);
 	var app_routes_1 = __webpack_require__(386);
-	__webpack_require__(447);
-	__webpack_require__(456);
-	var app_component_1 = __webpack_require__(458);
+	var common_1 = __webpack_require__(2);
+	__webpack_require__(448);
+	__webpack_require__(457);
+	var app_component_1 = __webpack_require__(459);
 	// enableProdMode()
 	platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [
 	    http_1.HTTP_PROVIDERS,
 	    app_routes_1.APP_ROUTER_PROVIDERS,
 	    forms_1.disableDeprecatedForms(),
-	    forms_1.provideForms()
+	    forms_1.provideForms(),
+	    { provide: common_1.APP_BASE_HREF, useValue: '/' }
 	])
 	    .catch(function (err) { return console.error(err); });
 	
@@ -4564,8 +4566,8 @@ webpackJsonp([0],{
 	"use strict";
 	var router_1 = __webpack_require__(387);
 	var home_component_1 = __webpack_require__(440);
-	var jobs_post_component_1 = __webpack_require__(444);
-	var jobs_full_component_1 = __webpack_require__(446);
+	var jobs_post_component_1 = __webpack_require__(445);
+	var jobs_full_component_1 = __webpack_require__(447);
 	exports.routes = [
 	    { path: '', component: home_component_1.HomeComponent },
 	    { path: 'jobs/post', component: jobs_post_component_1.JobsPostComponent },
@@ -4594,8 +4596,8 @@ webpackJsonp([0],{
 	var core_1 = __webpack_require__(5);
 	var router_1 = __webpack_require__(387);
 	var jobs_service_1 = __webpack_require__(441);
-	var collapse_on_click_directive_1 = __webpack_require__(442);
-	var filter_pipe_1 = __webpack_require__(443);
+	var collapse_on_click_directive_1 = __webpack_require__(443);
+	var filter_pipe_1 = __webpack_require__(444);
 	var HomeComponent = (function () {
 	    function HomeComponent(jobsService) {
 	        this.jobsService = jobsService;
@@ -4642,24 +4644,26 @@ webpackJsonp([0],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var http_1 = __webpack_require__(365);
-	var http_2 = __webpack_require__(365);
 	var core_1 = __webpack_require__(5);
+	var config_1 = __webpack_require__(442);
 	var JobsService = (function () {
 	    function JobsService(http) {
 	        this.http = http;
+	        this.config = new config_1.Config();
+	        this.BASE_URL = this.config.location + "api/jobs/";
 	    }
 	    JobsService.prototype.getJob = function (jobId) {
-	        return this.http.get("http://localhost:3000/api/jobs/" + jobId)
+	        return this.http.get("" + this.BASE_URL + jobId)
 	            .map(function (res) { return res.json(); });
 	    };
 	    JobsService.prototype.getJobs = function () {
-	        return this.http.get('http://localhost:3000/api/jobs')
+	        return this.http.get("" + this.BASE_URL)
 	            .map(function (res) { return res.json(); });
 	    };
 	    JobsService.prototype.postJobs = function (job) {
-	        var body = "companyname=" + job.companyname + "&companyemail=" + job.email + "&title=" + job.title + "&skills=" + job.skills + "&compensation=" + job.compensation + "&description=" + job.description, headers = new http_2.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+	        var body = "companyname=" + job.companyname + "&companyemail=" + job.email + "&title=" + job.title + "&skills=" + job.skills + "&compensation=" + job.compensation + "&description=" + job.description, headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 	        console.log('body = ', body);
-	        return this.http.post('http://localhost:3000/api/jobs', body, { headers: headers });
+	        return this.http.post("" + this.BASE_URL, body, { headers: headers });
 	    };
 	    JobsService = __decorate([
 	        core_1.Injectable(), 
@@ -4673,6 +4677,22 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 442:
+/***/ function(module, exports) {
+
+	"use strict";
+	var Config = (function () {
+	    function Config(location) {
+	        if (location === void 0) { location = window.location.href; }
+	        this.location = location;
+	    }
+	    return Config;
+	}());
+	exports.Config = Config;
+	
+
+/***/ },
+
+/***/ 443:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4730,7 +4750,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 443:
+/***/ 444:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4772,7 +4792,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 444:
+/***/ 445:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4787,7 +4807,7 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(5);
 	var jobs_service_1 = __webpack_require__(441);
-	var job_model_1 = __webpack_require__(445);
+	var job_model_1 = __webpack_require__(446);
 	var JobsPostComponent = (function () {
 	    function JobsPostComponent(jobsService) {
 	        this.jobsService = jobsService;
@@ -4817,7 +4837,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 445:
+/***/ 446:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4843,7 +4863,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 446:
+/***/ 447:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4859,7 +4879,7 @@ webpackJsonp([0],{
 	var core_1 = __webpack_require__(5);
 	var router_1 = __webpack_require__(387);
 	var jobs_service_1 = __webpack_require__(441);
-	var job_model_1 = __webpack_require__(445);
+	var job_model_1 = __webpack_require__(446);
 	var JobsFullComponent = (function () {
 	    function JobsFullComponent(jobsService, route, router) {
 	        this.jobsService = jobsService;
@@ -4894,21 +4914,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 447:
+/***/ 448:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 456:
+/***/ 457:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 458:
+/***/ 459:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4923,7 +4943,7 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(5);
 	var router_1 = __webpack_require__(387);
-	var navbar_component_1 = __webpack_require__(459);
+	var navbar_component_1 = __webpack_require__(460);
 	var AppComponent = (function () {
 	    function AppComponent() {
 	    }
@@ -4942,7 +4962,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 459:
+/***/ 460:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

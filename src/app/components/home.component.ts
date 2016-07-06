@@ -6,6 +6,7 @@ import { CollapseOnClick }   from '../directives/collapse-on-click.directive';
 import { JobModel }          from '../models/job.model';
 import { FilterPipe }        from '../pipes/filter.pipe';
 
+
 @Component({
   selector: 'my-home',
   template:`
