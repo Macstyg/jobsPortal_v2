@@ -4650,7 +4650,7 @@ webpackJsonp([0],{
 	    function JobsService(http) {
 	        this.http = http;
 	        this.config = new config_1.Config();
-	        this.BASE_URL = this.config.location + "api/jobs/";
+	        this.BASE_URL = this.config.location + "/api/jobs/";
 	    }
 	    JobsService.prototype.getJob = function (jobId) {
 	        return this.http.get("" + this.BASE_URL + jobId)
@@ -4682,7 +4682,7 @@ webpackJsonp([0],{
 	"use strict";
 	var Config = (function () {
 	    function Config(location) {
-	        if (location === void 0) { location = window.location.href; }
+	        if (location === void 0) { location = window.location.origin; }
 	        this.location = location;
 	    }
 	    return Config;

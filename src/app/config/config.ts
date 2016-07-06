@@ -1,3 +1,3 @@
 export class Config {
-  constructor(public location: string = window.location.href) {}
+  constructor(public location: string = window.location.origin) {}
 }

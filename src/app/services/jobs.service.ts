@@ -8,7 +8,7 @@ import { Config }     from '../config/config';
 @Injectable()
 export class JobsService {
   config: Config = new Config();
-  BASE_URL: string = `${this.config.location}api/jobs/`;
+  BASE_URL: string = `${this.config.location}/api/jobs/`;
 
   constructor(private http: Http) {}
 
