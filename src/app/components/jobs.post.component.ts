@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm }    from '@angular/common';
 
 import { JobsService } from '../services/jobs.service';
-import { Job }       from './job';
+import { JobModel }       from '../models/job.model';
 
 @Component({
   selector: 'my-form',
@@ -13,33 +13,33 @@ import { Job }       from './job';
     <form (ngSubmit)="onSubmit()" #jobForm="ngForm">
       <div class="form-group">
         <label>Company Name:</label>
-        <input type="text" placeholder="company name" class="form-control" [(ngModel)]="jobModel.companyname" name="companyname" #companyname="ngModel" required>
+        <input type="text" placeholder="company name" class="form-control" [(ngModel)]="job.companyname" name="companyname" #companyname="ngModel" required>
         <div [hidden]="companyname.valid || companyname.pristine" class="alert alert-danger">
           Company name is required
         </div>
       </div>
       <div class="form-group">
         <label>Company Email:</label>
-        <input type="email" placeholder="company email" class="form-control" [(ngModel)]="jobModel.email" name="email" #email="ngModel" required>
+        <input type="email" placeholder="company email" class="form-control" [(ngModel)]="job.email" name="email" #email="ngModel" required>
         <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
           Email is required
         </div>
       </div>
       <div class="form-group">
         <label>Vacancy title</label>
-        <input type="text" class="form-control" placeholder="Title" [(ngModel)]="jobModel.title" name="title" required>
+        <input type="text" class="form-control" placeholder="Title" [(ngModel)]="job.title" name="title" required>
       </div>
       <div class="form-group">
         <label>Skills</label>
-        <input type="text" placeholder="skills" class="form-control" [(ngModel)]="jobModel.skills" name="skills" required>
+        <input type="text" placeholder="skills" class="form-control" [(ngModel)]="job.skills" name="skills" required>
       </div>
       <div class="form-group">
         <label>Compensation</label>
-        <input type="text" class="form-control" placeholder="compensation" [(ngModel)]="jobModel.compensation" name="compensation">
+        <input type="text" class="form-control" placeholder="compensation" [(ngModel)]="job.compensation" name="compensation">
       </div>
       <div class="form-group">
         <label>Description</label>
-        <textarea rows="3" type="text" class="form-control" placeholder="Description" [(ngModel)]="jobModel.description" name="description" required></textarea>
+        <textarea rows="3" type="text" class="form-control" placeholder="Description" [(ngModel)]="job.description" name="description" required></textarea>
       </div>
       <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="!jobForm.form.valid">Submit</button>
     </form>
@@ -73,13 +73,13 @@ export class JobsPostComponent {
 
   }
 
-  jobModel = new Job();
+  job = new JobModel();
 
   submitted = false;
 
   onSubmit() {
     this.submitted = true;
-    this.jobsService.postJobs(this.jobModel)
+    this.jobsService.postJobs(this.job)
       .subscribe(
         data => console.log('data = ', data),
         error => console.error(error)

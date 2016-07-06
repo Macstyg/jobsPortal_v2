@@ -1,5 +1,5 @@
 
-export class Job {
+export class JobModel {
 
   constructor(
     public companyname: string = '',

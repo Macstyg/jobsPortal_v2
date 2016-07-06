@@ -9,7 +9,7 @@ var express    = require('express'),
     apiCtrl    = require('./controllers/apiCtrl')(app, express);
 
 mongoose
-  .connect(config.database)
+  .connect(config.databaseCloud)
   .connection.on('open', () => {
     console.log('Connected to DB');
   });
@@ -30,7 +30,7 @@ app
     next();
   })
   .use(express.static('public'))
-  .use('/api', apiCtrl) 
+  .use('/api', apiCtrl)
 
 app.listen(config.port);
 console.log(`Server running on port ${config.port}`);

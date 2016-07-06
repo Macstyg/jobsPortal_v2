@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobsService } from '../services/jobs.service';
+import { JobModel } from '../models/job.model';
 
 @Component({
   selector: 'my-full-job',
@@ -19,7 +20,7 @@ import { JobsService } from '../services/jobs.service';
 })
 
 export class JobsFullComponent implements OnInit {
-  job: Object = {};
+  job: JobModel = new JobModel();
   jobId: string;
   private sub: any;
 
@@ -34,9 +35,7 @@ export class JobsFullComponent implements OnInit {
           let id = params['id']
           this.jobsService.getJob(id)
             .subscribe(
-              data => {
-                this.job = data.json()
-              },
+              job => this.job = job,
               err => console.error(err)
             )
         }
