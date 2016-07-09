@@ -44,9 +44,12 @@ import { JobModel }       from '../models/job.model';
       <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="!jobForm.form.valid">Submit</button>
     </form>
     <div class="row show-hide-message">
-      <div class="col-sm-6 col-sm-offset-2">
-        <div class="alert alert-info">
-          Error message should be here
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="alert alert-info" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+        <div class="alert alert-info" *ngIf="successMessage">
+          {{ successMessage }}
         </div>
       </div>
     </div>
@@ -68,6 +71,8 @@ import { JobModel }       from '../models/job.model';
 })
 
 export class JobsPostComponent {
+  errorMessage: any;
+  successMessage: any;
 
   constructor(private jobsService: JobsService) {
 
@@ -81,8 +86,10 @@ export class JobsPostComponent {
     this.submitted = true;
     this.jobsService.postJobs(this.job)
       .subscribe(
-        data => console.log('data = ', data),
-        error => console.error(error)
+        data => this.successMessage = data.message,
+        error => {
+          this.errorMessage = error
+        }
       )
   }
 

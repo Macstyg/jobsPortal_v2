@@ -6,13 +6,14 @@ function toLower (input) {
 }
 
 vacancySchema = new Schema({
-  companyname:  { type: String, unique: true },
+  companyname:  { type: String },
   companyemail: { type: String, required: true, set: toLower },
   title:        { type: String, required: true },
   skills:       { type: String, required: true },
-  compensation: { type: Number},
+  compensation: { type: Number },
   description:  { type: String, required: true },
-  posted:       { type: Date, default: Date.now }
+  posted:       { type: Date, default: Date.now },
+  status:       { type: String, default: 'waiting' }   
 });
 
 module.exports = mongoose.model('Vacancy', vacancySchema);

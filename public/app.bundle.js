@@ -4568,10 +4568,12 @@ webpackJsonp([0],{
 	var home_component_1 = __webpack_require__(440);
 	var jobs_post_component_1 = __webpack_require__(445);
 	var jobs_full_component_1 = __webpack_require__(447);
+	var dashboard_component_1 = __webpack_require__(771);
 	exports.routes = [
 	    { path: '', component: home_component_1.HomeComponent },
 	    { path: 'jobs/post', component: jobs_post_component_1.JobsPostComponent },
-	    { path: 'jobs/:id', component: jobs_full_component_1.JobsFullComponent }
+	    { path: 'jobs/:id', component: jobs_full_component_1.JobsFullComponent },
+	    { path: 'admin/dashboard', component: dashboard_component_1.DashboardComponent }
 	];
 	exports.APP_ROUTER_PROVIDERS = [
 	    router_1.provideRouter(exports.routes)
@@ -4662,8 +4664,8 @@ webpackJsonp([0],{
 	    };
 	    JobsService.prototype.postJobs = function (job) {
 	        var body = "companyname=" + job.companyname + "&companyemail=" + job.email + "&title=" + job.title + "&skills=" + job.skills + "&compensation=" + job.compensation + "&description=" + job.description, headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-	        console.log('body = ', body);
-	        return this.http.post("" + this.BASE_URL, body, { headers: headers });
+	        return this.http.post("" + this.BASE_URL, body, { headers: headers })
+	            .map(function (res) { return res.json(); });
 	    };
 	    JobsService = __decorate([
 	        core_1.Injectable(), 
@@ -4815,14 +4817,17 @@ webpackJsonp([0],{
 	        this.submitted = false;
 	    }
 	    JobsPostComponent.prototype.onSubmit = function () {
+	        var _this = this;
 	        this.submitted = true;
 	        this.jobsService.postJobs(this.job)
-	            .subscribe(function (data) { return console.log('data = ', data); }, function (error) { return console.error(error); });
+	            .subscribe(function (data) { return _this.successMessage = data.message; }, function (error) {
+	            _this.errorMessage = error;
+	        });
 	    };
 	    JobsPostComponent = __decorate([
 	        core_1.Component({
 	            selector: 'my-form',
-	            template: "\n<div class=\"col-sm-6 col-sm-offset-3\">\n  <h2 class=\"text-center\">Create your vacancy here</h2>\n  <div class=\"jumbotron\">\n    <form (ngSubmit)=\"onSubmit()\" #jobForm=\"ngForm\">\n      <div class=\"form-group\">\n        <label>Company Name:</label>\n        <input type=\"text\" placeholder=\"company name\" class=\"form-control\" [(ngModel)]=\"job.companyname\" name=\"companyname\" #companyname=\"ngModel\" required>\n        <div [hidden]=\"companyname.valid || companyname.pristine\" class=\"alert alert-danger\">\n          Company name is required\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <label>Company Email:</label>\n        <input type=\"email\" placeholder=\"company email\" class=\"form-control\" [(ngModel)]=\"job.email\" name=\"email\" #email=\"ngModel\" required>\n        <div [hidden]=\"email.valid || email.pristine\" class=\"alert alert-danger\">\n          Email is required\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <label>Vacancy title</label>\n        <input type=\"text\" class=\"form-control\" placeholder=\"Title\" [(ngModel)]=\"job.title\" name=\"title\" required>\n      </div>\n      <div class=\"form-group\">\n        <label>Skills</label>\n        <input type=\"text\" placeholder=\"skills\" class=\"form-control\" [(ngModel)]=\"job.skills\" name=\"skills\" required>\n      </div>\n      <div class=\"form-group\">\n        <label>Compensation</label>\n        <input type=\"text\" class=\"form-control\" placeholder=\"compensation\" [(ngModel)]=\"job.compensation\" name=\"compensation\">\n      </div>\n      <div class=\"form-group\">\n        <label>Description</label>\n        <textarea rows=\"3\" type=\"text\" class=\"form-control\" placeholder=\"Description\" [(ngModel)]=\"job.description\" name=\"description\" required></textarea>\n      </div>\n      <button type=\"submit\" class=\"btn btn-success btn-lg btn-block\" [disabled]=\"!jobForm.form.valid\">Submit</button>\n    </form>\n    <div class=\"row show-hide-message\">\n      <div class=\"col-sm-6 col-sm-offset-2\">\n        <div class=\"alert alert-info\">\n          Error message should be here\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n  ",
+	            template: "\n<div class=\"col-sm-6 col-sm-offset-3\">\n  <h2 class=\"text-center\">Create your vacancy here</h2>\n  <div class=\"jumbotron\">\n    <form (ngSubmit)=\"onSubmit()\" #jobForm=\"ngForm\">\n      <div class=\"form-group\">\n        <label>Company Name:</label>\n        <input type=\"text\" placeholder=\"company name\" class=\"form-control\" [(ngModel)]=\"job.companyname\" name=\"companyname\" #companyname=\"ngModel\" required>\n        <div [hidden]=\"companyname.valid || companyname.pristine\" class=\"alert alert-danger\">\n          Company name is required\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <label>Company Email:</label>\n        <input type=\"email\" placeholder=\"company email\" class=\"form-control\" [(ngModel)]=\"job.email\" name=\"email\" #email=\"ngModel\" required>\n        <div [hidden]=\"email.valid || email.pristine\" class=\"alert alert-danger\">\n          Email is required\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <label>Vacancy title</label>\n        <input type=\"text\" class=\"form-control\" placeholder=\"Title\" [(ngModel)]=\"job.title\" name=\"title\" required>\n      </div>\n      <div class=\"form-group\">\n        <label>Skills</label>\n        <input type=\"text\" placeholder=\"skills\" class=\"form-control\" [(ngModel)]=\"job.skills\" name=\"skills\" required>\n      </div>\n      <div class=\"form-group\">\n        <label>Compensation</label>\n        <input type=\"text\" class=\"form-control\" placeholder=\"compensation\" [(ngModel)]=\"job.compensation\" name=\"compensation\">\n      </div>\n      <div class=\"form-group\">\n        <label>Description</label>\n        <textarea rows=\"3\" type=\"text\" class=\"form-control\" placeholder=\"Description\" [(ngModel)]=\"job.description\" name=\"description\" required></textarea>\n      </div>\n      <button type=\"submit\" class=\"btn btn-success btn-lg btn-block\" [disabled]=\"!jobForm.form.valid\">Submit</button>\n    </form>\n    <div class=\"row show-hide-message\">\n      <div class=\"col-sm-8 col-sm-offset-2\">\n        <div class=\"alert alert-info\" *ngIf=\"errorMessage\">\n          {{ errorMessage }}\n        </div>\n        <div class=\"alert alert-info\" *ngIf=\"successMessage\">\n          {{ successMessage }}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n  ",
 	            styles: [
 	                "\n    .ng-valid[required] {\n      border-left: 5px solid #42A948; /* green */\n    }\n\n    .ng-invalid {\n      border-left: 5px solid #a94442; /* red */\n    }\n    "
 	            ],
@@ -4983,7 +4988,7 @@ webpackJsonp([0],{
 	    NavbarComponent = __decorate([
 	        core_1.Component({
 	            selector: 'my-nav',
-	            template: "\n    <nav class=\"navbar navbar-inverse\">\n      <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n          <a [routerLink]=\"['/']\" class=\"navbar-brand\"><span class=\"glyphicon glyphicon-fire text-danger\"></span> All Jobs</a>\n        </div>\n        <ul class=\"nav navbar-nav navbar-right\">\n          <li><a [routerLink]=\"['/jobs/post']\">Post a job</a></li>\n        </ul>\n      </div>\n    </nav>\n  ",
+	            template: "\n    <nav class=\"navbar navbar-inverse\">\n      <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n          <a [routerLink]=\"['/']\" class=\"navbar-brand\"><span class=\"glyphicon glyphicon-fire text-danger\"></span> All Jobs</a>\n        </div>\n        <ul class=\"nav navbar-nav navbar-right\">\n          <li><a [routerLink]=\"['/jobs/post']\">Post a job</a></li>\n          <li><a [routerLink]=\"['/admin/dashboard']\">Admin Area</a></li>\n        </ul>\n      </div>\n    </nav>\n  ",
 	            directives: [router_1.ROUTER_DIRECTIVES]
 	        }), 
 	        __metadata('design:paramtypes', [])
@@ -4991,6 +4996,59 @@ webpackJsonp([0],{
 	    return NavbarComponent;
 	}());
 	exports.NavbarComponent = NavbarComponent;
+	
+
+/***/ },
+
+/***/ 771:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(5);
+	var jobs_service_1 = __webpack_require__(441);
+	var DashboardComponent = (function () {
+	    function DashboardComponent(jobsService) {
+	        this.jobsService = jobsService;
+	        this.jobs = [];
+	        this.i = 0;
+	    }
+	    DashboardComponent.prototype.onGetJobs = function () {
+	        var _this = this;
+	        this.jobsService.getJobs()
+	            .subscribe(function (jobs) {
+	            _this.jobs = jobs;
+	            var i = 1;
+	            for (var _i = 0, _a = _this.jobs; _i < _a.length; _i++) {
+	                var job = _a[_i];
+	                job.id = i;
+	                i++;
+	            }
+	        }, function (error) { return console.error(error); });
+	    };
+	    DashboardComponent.prototype.ngOnInit = function () {
+	        this.onGetJobs();
+	    };
+	    DashboardComponent = __decorate([
+	        core_1.Component({
+	            selector: 'my-dashboard',
+	            providers: [jobs_service_1.JobsService],
+	            template: "\n    <table class=\"table table-bordered\">\n      <tr>\n        <th>#</th>\n        <th>Company</th>\n        <th>Email</th>\n        <th>Posted</th>\n        <th>Status</th>\n      </tr>\n      <tr *ngFor=\"let job of jobs\">\n        <td>{{ job.id }}</td>\n        <td>{{ job.companyname }}</td>\n        <td>{{ job.companyemail }}</td>\n        <td>{{ job.posted | date }}</td>\n        <td>\n          <span class=\"label label-info\" *ngIf=\"job.status === 'waiting'\">Waiting</span>\n          <span class=\"label label-success\" *ngIf=\"job.status === 'accepted'\">Accepted</span>\n          <span class=\"label label-danger\" *ngIf=\"job.status === 'declined'\">Declined</span>\n        </td>\n      </tr>\n    </table>\n  ",
+	            styles: ["\n        .table tr:nth-of-type(odd) {\n          background-color: #fbfcfd;\n        }\n\n        .table tr:hover {\n          background-color: #eef1f5;\n          cursor: pointer;\n        }\n    "]
+	        }), 
+	        __metadata('design:paramtypes', [jobs_service_1.JobsService])
+	    ], DashboardComponent);
+	    return DashboardComponent;
+	}());
+	exports.DashboardComponent = DashboardComponent;
 	
 
 /***/ }

@@ -31,6 +31,11 @@ app
   })
   .use(express.static('public'))
   .use('/api', apiCtrl)
+  .get('*', (req, res, next) => {
+    console.log('Hello!!!!');
+    res.sendFile(path.join(__dirname + '/public/app.bundle.js'))
+    next();
+  })
 
 app.listen(config.port);
 console.log(`Server running on port ${config.port}`);
