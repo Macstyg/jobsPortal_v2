@@ -6,3 +6,6 @@ public/polyfills.bundle.js
 public/polyfills.map
 public/vendor.bundle.js
 public/vendor.map
+public/index.html
+public/app.css
+public/app.map
