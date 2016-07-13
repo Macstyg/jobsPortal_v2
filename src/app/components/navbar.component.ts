@@ -12,6 +12,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><a [routerLink]="['/jobs/post']">Post a job</a></li>
+          <li><a [routerLink]="['/admin/dashboard']">Admin Area</a></li>
         </ul>
       </div>
     </nav>

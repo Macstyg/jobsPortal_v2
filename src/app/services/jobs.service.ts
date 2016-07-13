@@ -25,7 +25,7 @@ export class JobsService {
   postJobs(job): Observable<any> {
     let body    = `companyname=${job.companyname}&companyemail=${job.email}&title=${job.title}&skills=${job.skills}&compensation=${job.compensation}&description=${job.description}`,
         headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
-        console.log('body = ', body);
-    return this.http.post(`${this.BASE_URL}`, body, {headers: headers});
+    return this.http.post(`${this.BASE_URL}`, body, {headers: headers})
+      .map(res => res.json());
   }
 }

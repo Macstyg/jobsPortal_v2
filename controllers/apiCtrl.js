@@ -19,10 +19,10 @@ apiRouter
       vacancy.compensation = req.body.compensation;
       vacancy.title = req.body.title;
       vacancy.description = req.body.description;
-console.log(req.body);
+
       vacancy.save((err) => {
         if (err) res.send(err);
-        res.json({ message: 'Vacancy has been created' });
+        res.json({ message: 'Your vacancy added, and you can see it after passing the moderation' });
       });
     })
 
