@@ -1,3 +1,8 @@
 /node_modules/
 /npm-debug.log
 /typings/
+public/app.bundle.js
+public/polyfills.bundle.js
+public/polyfills.map
+public/vendor.bundle.js
+public/vendor.map
