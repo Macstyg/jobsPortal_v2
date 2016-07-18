@@ -7,6 +7,7 @@
   },
   "description": "Portal for search job for the remote workers",
   "scripts": {
+    "postinstall": "webpack",
     "typings-install": "typings install",
     "build": "webpack --inline --colors --progress --display-error-details --display-cached",
     "watch": "npm run build -- --watch",
