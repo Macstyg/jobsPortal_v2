@@ -37,10 +37,42 @@ apiRouter
   .route('/jobs/:job_id')
     .get((req, res) => {
       Vacancy.findById(req.params.job_id, (err, job) => {
-        if (err) res.send(err);
+        if (err) {
+          return res.status(404).json({
+            title: 'An error occurred',
+            error: err
+          });
+        }
         res.json(job);
       })
     })
+
+    .patch((req, res) => {
+      Vacancy.findById(req.params.job_id, (err, job) => {
+        if (err) {
+          return res.status(404).json({
+            title: 'An error occurred',
+            error: err
+          });
+        }
+        if (!job) {
+          return res.status(404).json({
+            title: 'No documen found',
+            error: {message: 'Job could not be found'}
+          });
+        }
+        job.status = req.body.status;
+        job.save((err, result) => {
+          if (err) {
+            return res.status(404).json({
+              title: 'An error occurred',
+              error: err
+            });
+          }
+          res.status(200).json(result);
+        });
+      });
+    });
 
 return apiRouter;
 

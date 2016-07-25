@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component }         from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+
 import { JobsService } from '../services/jobs.service';
+import { JobModel }    from '../models/job.model';
+
 
 @Component({
   selector: 'my-dashboard',
@@ -13,15 +17,16 @@ import { JobsService } from '../services/jobs.service';
         <th>Posted</th>
         <th>Status</th>
       </tr>
-      <tr *ngFor="let job of jobs">
-        <td>{{ job.id }}</td>
+      <tr *ngFor="let job of jobs; let in = index" [routerLink]="['/jobs', job._id]">
+
+        <td>{{ in + 1 }}</td>
         <td>{{ job.companyname }}</td>
         <td>{{ job.companyemail }}</td>
         <td>{{ job.posted | date }}</td>
         <td>
-          <span class="label label-info" *ngIf="job.status === 'waiting'">Waiting</span>
-          <span class="label label-success" *ngIf="job.status === 'accepted'">Accepted</span>
-          <span class="label label-danger" *ngIf="job.status === 'declined'">Declined</span>
+            <span class="label label-info" *ngIf="job.status === 'waiting'">Waiting</span>
+            <span class="label label-success" *ngIf="job.status === 'accepted'">Accepted</span>
+            <span class="label label-danger" *ngIf="job.status === 'declined'">Declined</span>
         </td>
       </tr>
     </table>
@@ -35,11 +40,11 @@ import { JobsService } from '../services/jobs.service';
           background-color: #eef1f5;
           cursor: pointer;
         }
-    `]
+    `],
+    directives: [ROUTER_DIRECTIVES]
 })
 export class DashboardComponent {
-  jobs: any[] = [];
-  i: number = 0;
+  jobs: JobModel[] = [];
 
   constructor (private jobsService: JobsService) {}
 
@@ -47,12 +52,7 @@ export class DashboardComponent {
     this.jobsService.getJobs()
       .subscribe(
         jobs => {
-          this.jobs = jobs
-          let i = 1;
-          for (let job of this.jobs ) {
-            job.id = i;
-            i++;
-          }
+          this.jobs = jobs.reverse();
         },
         error => console.error(error)
       )

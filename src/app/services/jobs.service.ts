@@ -28,4 +28,10 @@ export class JobsService {
     return this.http.post(`${this.BASE_URL}`, body, {headers: headers})
       .map(res => res.json());
   }
+
+  updateJob(jobId, status): Observable<any> {
+    let body    = `status=${status}`,
+        headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
+    return this.http.patch(`${this.BASE_URL}${jobId}`, body, {headers: headers})
+  }
 }

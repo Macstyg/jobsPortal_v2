@@ -17,7 +17,7 @@ import { FilterPipe }        from '../pipes/filter.pipe';
             <input type="text" name="name" placeholder="search for a vacancy..." class="form-control" [(ngModel)]="filterText">
           </div>
           <div class="panel panel-success" *ngFor="let job of jobs | filter: filterText">
-            <div class="panel-heading" collapse-on-click  collapse-on-click #cp="collapsible">
+            <div class="panel-heading" collapse-on-click #cp="collapsible">
               <h1 class="panel-title">{{ job.title }} <span class="label label-info">{{ job.skills }}</span></h1>
             </div>
             <div class="panel-body" *ngIf="!cp.collapsed">
@@ -52,6 +52,13 @@ export class HomeComponent implements OnInit {
 
   onGetJobs() {
     this.jobsService.getJobs()
+      .map( jobs => {
+        let filteredJobs = [];
+        for (let job of jobs){
+          if (job.status === 'accepted') filteredJobs.push(job);
+        }
+        return filteredJobs;
+      })
       .subscribe(
         jobs => {
           this.jobs = jobs;

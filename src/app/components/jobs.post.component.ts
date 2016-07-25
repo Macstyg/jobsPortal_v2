@@ -86,10 +86,11 @@ export class JobsPostComponent {
     this.submitted = true;
     this.jobsService.postJobs(this.job)
       .subscribe(
-        data => this.successMessage = data.message,
-        error => {
-          this.errorMessage = error
-        }
+        data => {
+          this.successMessage = data.message
+          this.job = new JobModel();
+        },
+        error => this.errorMessage = error
       )
   }
 

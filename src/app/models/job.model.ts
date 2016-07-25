@@ -7,6 +7,7 @@ export class JobModel {
     public title: string = '',
     public skills: string = '',
     public description: string = '',
+    public status: string = 'waiting',
     public compensation: number = 0
   ){}
 

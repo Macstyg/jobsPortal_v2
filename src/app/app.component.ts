@@ -15,6 +15,7 @@ import {HomeComponent} from './components/home.component';
       </div>
     </div>
   `,
+  styles: ['main.css'],
   directives: [NavbarComponent, ROUTER_DIRECTIVES]
 })
 export class AppComponent {}
