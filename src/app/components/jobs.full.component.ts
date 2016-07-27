@@ -61,7 +61,11 @@ export class JobsFullComponent implements OnInit {
   statusWasSet(status) {
     this.jobsService.updateJob(this.jobId, status)
       .subscribe(
-        data => console.log(data.json()),
+        data => {
+          if (data.status === 200) {
+            this.router.navigate(['admin/dashboard'])
+          }
+        },
         error => console.error(error)
       )
   }

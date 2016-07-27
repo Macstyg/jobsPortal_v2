@@ -4822,11 +4822,13 @@ webpackJsonp([0],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(5);
+	var router_1 = __webpack_require__(388);
 	var jobs_service_1 = __webpack_require__(442);
 	var job_model_1 = __webpack_require__(447);
 	var JobsPostComponent = (function () {
-	    function JobsPostComponent(jobsService) {
+	    function JobsPostComponent(jobsService, router) {
 	        this.jobsService = jobsService;
+	        this.router = router;
 	        this.job = new job_model_1.JobModel();
 	        this.submitted = false;
 	    }
@@ -4836,8 +4838,7 @@ webpackJsonp([0],{
 	        this.jobsService.postJobs(this.job)
 	            .subscribe(function (data) {
 	            _this.successMessage = data.message;
-	            _this.job = new job_model_1.JobModel();
-	        }, function (error) { return _this.errorMessage = error; });
+	        }, function (error) { return _this.errorMessage = error; }, function () { return _this.job = new job_model_1.JobModel(); });
 	    };
 	    JobsPostComponent = __decorate([
 	        core_1.Component({
@@ -4848,7 +4849,7 @@ webpackJsonp([0],{
 	            ],
 	            providers: [jobs_service_1.JobsService]
 	        }), 
-	        __metadata('design:paramtypes', [jobs_service_1.JobsService])
+	        __metadata('design:paramtypes', [jobs_service_1.JobsService, router_1.Router])
 	    ], JobsPostComponent);
 	    return JobsPostComponent;
 	}());
@@ -4920,8 +4921,13 @@ webpackJsonp([0],{
 	        });
 	    };
 	    JobsFullComponent.prototype.statusWasSet = function (status) {
+	        var _this = this;
 	        this.jobsService.updateJob(this.jobId, status)
-	            .subscribe(function (data) { return console.log(data.json()); }, function (error) { return console.error(error); });
+	            .subscribe(function (data) {
+	            if (data.status === 200) {
+	                _this.router.navigate(['admin/dashboard']);
+	            }
+	        }, function (error) { return console.error(error); });
 	    };
 	    JobsFullComponent.prototype.ngOnInit = function () {
 	        this.onGetJob();

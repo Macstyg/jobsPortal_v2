@@ -1,10 +1,19 @@
 var mongoose   = require('mongoose'),
     Vacancy    = require('../models/vacancy'),
+    nodemailer = require('nodemailer'),
     bodyParser = require('body-parser');
 
 module.exports = function (app, express) {
 
 var apiRouter = express.Router();
+var transporter = nodemailer.createTransport('smtps://macstyg%40gmail.com:@smtp.gmail.com');
+var mailOptions = {
+  from: '"Jobs Portal" <macstyg@gmail.com>',
+  to: 'stygian@ukr.net, ilzorya@gmail.com',
+  subject: 'Jobs postal new vacancy post',
+  text: 'Somebody posted a job on portal!!!',
+  html: '<a href="https://jobsportal.herokuapp.com">You can see it here</a>'
+};
 
 apiRouter
   .route('/jobs')
@@ -30,6 +39,10 @@ apiRouter
       Vacancy.find({}, (err, vacancys) => {
         if (err) res.send(err);
         res.json(vacancys);
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) console.error(error);
+          console.log('Message sent: ' + info.response);
+        })
       })
     });
 

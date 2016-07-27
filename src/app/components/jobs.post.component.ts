@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { NgForm }    from '@angular/common';
+import { Component }   from '@angular/core';
+import { NgForm }      from '@angular/common';
+import { Router }      from '@angular/router';
 
 import { JobsService } from '../services/jobs.service';
-import { JobModel }       from '../models/job.model';
+import { JobModel }    from '../models/job.model';
 
 @Component({
   selector: 'my-form',
@@ -74,9 +75,8 @@ export class JobsPostComponent {
   errorMessage: any;
   successMessage: any;
 
-  constructor(private jobsService: JobsService) {
-
-  }
+  constructor(private jobsService: JobsService,
+              private router: Router) {}
 
   job = new JobModel();
 
@@ -88,9 +88,9 @@ export class JobsPostComponent {
       .subscribe(
         data => {
           this.successMessage = data.message
-          this.job = new JobModel();
         },
-        error => this.errorMessage = error
+        error => this.errorMessage = error,
+        () => this.job = new JobModel()
       )
   }
 
