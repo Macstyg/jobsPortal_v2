@@ -19,7 +19,6 @@
     "es6-promise": "3.0.2",
     "es6-shim": "0.35.0",
     "reflect-metadata": "0.1.2",
-
     "typings": "~1.0.3",
     "webpack-dev-server": "^1.14.0"
   },
